@@ -1,0 +1,271 @@
+---
+import Base from '../layouts/Base.astro'
+import type { Locale } from '../lib/urls'
+import { canonical, homePath, hrefFor } from '../lib/urls'
+import { site } from '../../site.config'
+
+interface Props {
+  locale: Locale
+}
+
+const { locale } = Astro.props
+const copy = locale === 'ru'
+  ? {
+      path: '/ru/pdf-tools/',
+      title: 'Бесплатные PDF-инструменты онлайн — Foto',
+      description: 'Объединяйте PDF и извлекайте страницы прямо в браузере. Файлы не загружаются на сервер.',
+      imageAlt: 'Foto — PDF-инструменты в браузере',
+      crumb: 'PDF-инструменты',
+      h1: 'Бесплатные PDF-инструменты',
+      lede: 'Объединяйте документы и извлекайте страницы прямо в браузере. Ваши PDF-файлы не загружаются на сервер.',
+      merge: 'Объединить PDF',
+      mergeHelp: 'Выберите два или больше PDF. Документы будут объединены в выбранном порядке.',
+      chooseMany: 'Выбрать PDF-файлы',
+      mergeButton: 'Объединить и скачать',
+      extract: 'Извлечь страницы',
+      extractHelp: 'Выберите PDF и укажите страницы или диапазоны, например: 1-3, 5.',
+      chooseOne: 'Выбрать PDF',
+      pagesLabel: 'Страницы',
+      pagesPlaceholder: 'Например: 1-3, 5',
+      extractButton: 'Создать PDF со страницами',
+      localNote: 'Обработка выполняется на этом устройстве. Файлы не отправляются на сервер.',
+      back: 'На главную',
+    }
+  : {
+      path: '/pdf-tools/',
+      title: 'Free PDF Tools Online — Foto',
+      description: 'Merge PDFs and extract pages in your browser. Your files are never uploaded to a server.',
+      imageAlt: 'Foto — PDF tools in your browser',
+      crumb: 'PDF tools',
+      h1: 'Free PDF tools',
+      lede: 'Merge documents and extract pages right in your browser. Your PDF files are never uploaded to a server.',
+      merge: 'Merge PDFs',
+      mergeHelp: 'Choose two or more PDFs. They will be merged in the order you select them.',
+      chooseMany: 'Choose PDF files',
+      mergeButton: 'Merge and download',
+      extract: 'Extract pages',
+      extractHelp: 'Choose a PDF and enter pages or ranges, for example: 1-3, 5.',
+      chooseOne: 'Choose a PDF',
+      pagesLabel: 'Pages',
+      pagesPlaceholder: 'For example: 1-3, 5',
+      extractButton: 'Create PDF with selected pages',
+      localNote: 'Processing happens on this device. Files are not sent to a server.',
+      back: 'Home',
+    }
+const homeUrl = canonical(homePath(locale))
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'WebPage',
+  name: copy.h1,
+  description: copy.description,
+  url: canonical(copy.path),
+  inLanguage: locale,
+  isPartOf: { '@type': 'WebSite', name: site.name, url: homeUrl },
+}
+---
+
+<Base locale={locale} path={copy.path} title={copy.title} description={copy.description} imageAlt={copy.imageAlt} jsonLd={jsonLd}>
+  <article class="page wrap pdf-page" data-pdf-tools data-locale={locale}>
+    <nav class="crumb" aria-label={locale === 'ru' ? 'Навигация' : 'Breadcrumb'}>
+      <a href={hrefFor(homePath(locale))}>Foto</a>
+      <span aria-hidden="true">/</span>
+      <span aria-current="page">{copy.crumb}</span>
+    </nav>
+
+    <header class="hero">
+      <p class="kicker">PDF · {locale === 'ru' ? 'В вашем браузере' : 'In your browser'}</p>
+      <h1>{copy.h1}</h1>
+      <p class="lede">{copy.lede}</p>
+      <ul class="trust">
+        <li>{locale === 'ru' ? 'Без загрузки на сервер' : 'No upload'}</li>
+        <li>{locale === 'ru' ? 'Бесплатно' : 'Free'}</li>
+      </ul>
+    </header>
+
+    <div class="pdf-grid">
+      <section class="pdf-card" aria-labelledby="merge-heading">
+        <h2 id="merge-heading">{copy.merge}</h2>
+        <p>{copy.mergeHelp}</p>
+        <label class="file-pick">
+          <span>{copy.chooseMany}</span>
+          <input data-merge-files type="file" accept="application/pdf,.pdf" multiple />
+        </label>
+        <p class="file-summary" data-merge-summary aria-live="polite"></p>
+        <button class="btn" type="button" data-merge>{copy.mergeButton}</button>
+      </section>
+
+      <section class="pdf-card" aria-labelledby="extract-heading">
+        <h2 id="extract-heading">{copy.extract}</h2>
+        <p>{copy.extractHelp}</p>
+        <label class="file-pick">
+          <span>{copy.chooseOne}</span>
+          <input data-extract-file type="file" accept="application/pdf,.pdf" />
+        </label>
+        <label class="field">
+          <span>{copy.pagesLabel}</span>
+          <input data-page-range type="text" inputmode="text" placeholder={copy.pagesPlaceholder} />
+        </label>
+        <button class="btn" type="button" data-extract>{copy.extractButton}</button>
+      </section>
+    </div>
+
+    <p class="local-note">{copy.localNote}</p>
+    <p class="pdf-status" role="status" aria-live="polite" data-status></p>
+    <p><a href={hrefFor(homePath(locale))}>{copy.back}</a></p>
+  </article>
+</Base>
+
+<style>
+  .pdf-page .hero { margin-bottom: 24px; }
+  .pdf-grid { display: grid; gap: 16px; }
+  .pdf-card {
+    display: grid;
+    gap: 12px;
+    align-content: start;
+    padding: 20px;
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-l);
+    background: var(--color-surface);
+    box-shadow: var(--shadow);
+  }
+  .pdf-card h2, .pdf-card p { margin: 0; }
+  .pdf-card p { color: var(--color-ink-soft); }
+  .file-pick {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: var(--tap);
+    padding: 0 16px;
+    border: 1px solid var(--color-line);
+    border-radius: 999px;
+    font-weight: 700;
+    cursor: pointer;
+    overflow: hidden;
+  }
+  .file-pick input {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    cursor: pointer;
+  }
+  .field { display: grid; gap: 6px; }
+  .field input {
+    min-height: var(--tap);
+    padding: 0 12px;
+    border: 1px solid var(--color-line);
+    border-radius: 12px;
+    background: var(--color-bg);
+    color: var(--color-ink);
+  }
+  .file-summary, .pdf-status { min-height: 1.5em; }
+  .local-note { margin-top: 18px; color: var(--color-ink-soft); }
+  @media (min-width: 720px) {
+    .pdf-grid { grid-template-columns: 1fr 1fr; }
+  }
+</style>
+
+<script>
+  import { PDFDocument } from 'pdf-lib'
+
+  const root = document.querySelector('[data-pdf-tools]')
+  if (root instanceof HTMLElement) {
+    const ru = root.dataset.locale === 'ru'
+    const text = {
+      ready: ru ? 'Готово. Файл скачан.' : 'Done. Your file has been downloaded.',
+      merging: ru ? 'Объединяем PDF…' : 'Merging PDFs…',
+      extracting: ru ? 'Извлекаем страницы…' : 'Extracting pages…',
+      errorFiles: ru ? 'Выберите PDF-файл или файлы.' : 'Choose one or more PDF files.',
+      errorRange: ru ? 'Укажите корректные номера страниц, например 1-3, 5.' : 'Enter valid page numbers, for example 1-3, 5.',
+      errorPage: ru ? 'Номер страницы вне диапазона этого PDF.' : 'A page number is outside this PDF’s range.',
+      errorProcess: ru ? 'Не удалось обработать PDF. Убедитесь, что файл не повреждён и не защищён паролем.' : 'Could not process the PDF. Check that it is valid and not password protected.',
+    }
+    const status = root.querySelector('[data-status]')
+    const mergeInput = root.querySelector('[data-merge-files]')
+    const extractInput = root.querySelector('[data-extract-file]')
+    const summary = root.querySelector('[data-merge-summary]')
+    const rangeInput = root.querySelector('[data-page-range]')
+
+    const download = (bytes, filename) => {
+      const blob = new Blob([bytes], { type: 'application/pdf' })
+      const url = URL.createObjectURL(blob)
+      const link = document.createElement('a')
+      link.href = url
+      link.download = filename
+      link.click()
+      setTimeout(() => URL.revokeObjectURL(url), 30000)
+    }
+    const safeName = (name) => name.replace(/\.pdf$/i, '').replace(/[^\p{L}\p{N}._-]+/gu, '-') || 'document'
+    const outputName = (names, suffix) => names.slice(0, 2).map(safeName).join('-') + (names.length > 2 ? '-and-more' : '') + suffix + '.pdf'
+
+    mergeInput?.addEventListener('change', () => {
+      const files = [...(mergeInput.files ?? [])]
+      if (summary) summary.textContent = files.map((file) => file.name).join(', ')
+    })
+
+    root.querySelector('[data-merge]')?.addEventListener('click', async (event) => {
+      const button = event.currentTarget
+      if (!(button instanceof HTMLButtonElement) || !mergeInput?.files || !status) return
+      const files = [...mergeInput.files]
+      if (files.length < 2) { status.textContent = text.errorFiles; return }
+      button.disabled = true
+      status.textContent = text.merging
+      try {
+        const output = await PDFDocument.create()
+        for (const file of files) {
+          const input = await PDFDocument.load(await file.arrayBuffer())
+          const pages = await output.copyPages(input, input.getPageIndices())
+          pages.forEach((page) => output.addPage(page))
+        }
+        download(await output.save(), outputName(files.map((file) => file.name), '-merged'))
+        status.textContent = text.ready
+      } catch {
+        status.textContent = text.errorProcess
+      } finally {
+        button.disabled = false
+      }
+    })
+
+    const parseRange = (value) => {
+      const pages = []
+      for (const part of value.split(',').map((item) => item.trim()).filter(Boolean)) {
+        const match = part.match(/^(\d+)(?:\s*-\s*(\d+))?$/)
+        if (!match) return null
+        const first = Number(match[1])
+        const last = Number(match[2] || match[1])
+        if (first < 1 || last < first || last - first > 2000 || pages.length + last - first + 1 > 2000) return null
+        for (let page = first; page <= last; page++) pages.push(page - 1)
+      }
+      return pages.length ? [...new Set(pages)] : null
+    }
+
+    root.querySelector('[data-extract]')?.addEventListener('click', async (event) => {
+      const button = event.currentTarget
+      if (!(button instanceof HTMLButtonElement) || !extractInput?.files || !rangeInput || !status) return
+      const file = extractInput.files[0]
+      const pages = parseRange(rangeInput.value)
+      if (!file) { status.textContent = text.errorFiles; return }
+      if (!pages) { status.textContent = text.errorRange; return }
+      button.disabled = true
+      status.textContent = text.extracting
+      try {
+        const input = await PDFDocument.load(await file.arrayBuffer())
+        if (pages.some((page) => page >= input.getPageCount())) {
+          status.textContent = text.errorPage
+          return
+        }
+        const output = await PDFDocument.create()
+        const copied = await output.copyPages(input, pages)
+        copied.forEach((page) => output.addPage(page))
+        download(await output.save(), safeName(file.name) + '-pages.pdf')
+        status.textContent = text.ready
+      } catch {
+        status.textContent = text.errorProcess
+      } finally {
+        button.disabled = false
+      }
+    })
+  }
+</script>

@@ -42,6 +42,9 @@ const faqHeading = locale === 'ru' ? 'Вопросы' : 'Questions'
       <div class="hero-actions">
         <a class="btn" href="#tools">{copy.browse}</a>
         {first && <a class="btn secondary" href={hrefFor(toolPath(locale, first.slug))}>{first.title}</a>}
+        <a class="btn secondary" href={hrefFor(locale === 'ru' ? '/ru/pdf-tools/' : '/pdf-tools/')}>
+          {locale === 'ru' ? 'PDF-инструменты' : 'PDF tools'}
+        </a>
       </div>
       <ul class="trust">
         {copy.trust.map((item) => <li>{item}</li>)}

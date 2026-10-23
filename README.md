@@ -39,6 +39,10 @@ public/                 favicon and social image
 
 Processing stays on the device: canvas for JPG, PNG, and WebP, and `heic-to` only on the HEIC page when the browser cannot decode HEIC itself (Safari usually can). Several files download as a ZIP.
 
+## PDF tools
+
+The separate `/pdf-tools/` page (and `/ru/pdf-tools/`) can merge PDF files and extract selected pages. Processing uses `pdf-lib` in the browser; the selected documents are not uploaded. The PDF section is linked from the home page and does not change the image tools.
+
 ## Custom domain
 
 Canonical URLs, Open Graph, hreflang, asset prefixes, and the sitemap all come from one value, `SITE_ROOT` in `site.config.ts`.
