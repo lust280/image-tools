@@ -12,12 +12,12 @@ const { locale } = Astro.props
 const copy = locale === 'ru'
   ? {
       path: '/ru/pdf-tools/',
-      title: 'Бесплатные PDF-инструменты онлайн — Foto',
-      description: 'Объединяйте PDF и извлекайте страницы прямо в браузере. Файлы не загружаются на сервер.',
+      title: 'PDF-редактор онлайн бесплатно: текст, фото, страницы — Foto',
+      description: 'Бесплатно редактируйте PDF в браузере: добавляйте текст и фото, объединяйте документы и извлекайте страницы. Файлы остаются на вашем устройстве.',
       imageAlt: 'Foto — PDF-инструменты в браузере',
       crumb: 'PDF-инструменты',
-      h1: 'Бесплатные PDF-инструменты',
-      lede: 'Объединяйте документы и извлекайте страницы прямо в браузере. Ваши PDF-файлы не загружаются на сервер.',
+      h1: 'Бесплатный PDF-редактор и инструменты онлайн',
+      lede: 'Добавляйте текст и фото в PDF, объединяйте документы и извлекайте страницы. Всё работает в браузере, файлы не загружаются на сервер.',
       merge: 'Объединить PDF',
       mergeHelp: 'Выберите два или больше PDF. Документы будут объединены в выбранном порядке.',
       chooseMany: 'Выбрать PDF-файлы',
@@ -53,15 +53,25 @@ const copy = locale === 'ru'
       editorError: 'Не удалось открыть или сохранить PDF. Файл может быть повреждён или защищён паролем.',
       textMissing: 'Сначала введите текст.',
       imageMissing: 'Сначала выберите PNG- или JPG-фото.',
+      faqTitle: 'Как работать с PDF онлайн',
+      faqEditQ: 'Можно ли бесплатно добавить текст или фото в PDF?',
+      faqEditA: 'Да. Откройте PDF в редакторе, выберите добавление текста или фото, укажите место на странице и сохраните изменённую копию. Инструмент добавляет содержимое поверх страницы.',
+      faqReplaceQ: 'Можно ли заменить уже существующий текст?',
+      faqReplaceA: 'Старый фрагмент можно закрыть белой областью и написать новый поверх него. Это визуальная правка: исходный текст не удаляется надёжно, а соседние строки не перестраиваются. Не используйте этот способ для сокрытия конфиденциальных данных.',
+      faqMergeQ: 'Как объединить PDF или сохранить отдельные страницы?',
+      faqMergeA: 'Для объединения выберите несколько PDF в нужном порядке и нажмите «Объединить и скачать». Для извлечения выберите один документ и укажите номера страниц или диапазоны, например 1-3, 5.',
+      faqPrivacyQ: 'Загружаются ли мои PDF на сайт?',
+      faqPrivacyA: 'Нет. Обработка выполняется в браузере на вашем устройстве; выбранные файлы не отправляются на сервер.',
+      switchLanguage: 'English version',
     }
   : {
       path: '/pdf-tools/',
-      title: 'Free PDF Tools Online — Foto',
-      description: 'Merge PDFs and extract pages in your browser. Your files are never uploaded to a server.',
+      title: 'Free PDF Editor Online: Add Text, Photos & Pages — Foto',
+      description: 'Edit PDFs free in your browser: add text and photos, merge documents, or extract pages. Your files stay on your device.',
       imageAlt: 'Foto — PDF tools in your browser',
       crumb: 'PDF tools',
-      h1: 'Free PDF tools',
-      lede: 'Merge documents and extract pages right in your browser. Your PDF files are never uploaded to a server.',
+      h1: 'Free PDF editor and online tools',
+      lede: 'Add text and photos to PDFs, merge documents, and extract pages. Everything runs in your browser; your files are not uploaded.',
       merge: 'Merge PDFs',
       mergeHelp: 'Choose two or more PDFs. They will be merged in the order you select them.',
       chooseMany: 'Choose PDF files',
@@ -97,6 +107,16 @@ const copy = locale === 'ru'
       editorError: 'Could not open or save the PDF. The file may be damaged or password protected.',
       textMissing: 'Enter some text first.',
       imageMissing: 'Choose a PNG or JPG image first.',
+      faqTitle: 'How to work with PDFs online',
+      faqEditQ: 'Can I add text or a photo to a PDF for free?',
+      faqEditA: 'Yes. Open your PDF in the editor, choose add text or add image, place it on the page, and save an edited copy. Added content is placed over the page.',
+      faqReplaceQ: 'Can I replace existing text in a PDF?',
+      faqReplaceA: 'You can cover a fragment with a white area and place new text over it. This is a visual edit: the original text is not securely removed and nearby lines do not reflow. Do not use this method to hide confidential information.',
+      faqMergeQ: 'How do I merge PDFs or save selected pages?',
+      faqMergeA: 'To merge, select multiple PDFs in the order you want and choose Merge and download. To extract pages, select one PDF and enter page numbers or ranges such as 1-3, 5.',
+      faqPrivacyQ: 'Are my PDF files uploaded to the website?',
+      faqPrivacyA: 'No. Processing happens in your browser on your device; selected files are not sent to a server.',
+      switchLanguage: 'Русская версия',
     }
 const homeUrl = canonical(homePath(locale))
 const jsonLd = {
@@ -127,6 +147,10 @@ const jsonLd = {
         <li>{locale === 'ru' ? 'Бесплатно' : 'Free'}</li>
       </ul>
     </header>
+
+    <nav class="pdf-language" aria-label={locale === 'ru' ? 'Язык страницы' : 'Page language'}>
+      <a href={hrefFor(locale === 'ru' ? '/pdf-tools/' : '/ru/pdf-tools/')} lang={locale === 'ru' ? 'en' : 'ru'}>{copy.switchLanguage}</a>
+    </nav>
 
     <section class="editor-card" aria-labelledby="editor-heading">
       <h2 id="editor-heading">{copy.editor}</h2>
@@ -209,12 +233,27 @@ const jsonLd = {
 
     <p class="local-note">{copy.localNote}</p>
     <p class="pdf-status" role="status" aria-live="polite" data-status></p>
+    <section class="pdf-faq" aria-labelledby="pdf-faq-title">
+      <h2 id="pdf-faq-title">{copy.faqTitle}</h2>
+      <h3>{copy.faqEditQ}</h3>
+      <p>{copy.faqEditA}</p>
+      <h3>{copy.faqReplaceQ}</h3>
+      <p>{copy.faqReplaceA}</p>
+      <h3>{copy.faqMergeQ}</h3>
+      <p>{copy.faqMergeA}</p>
+      <h3>{copy.faqPrivacyQ}</h3>
+      <p>{copy.faqPrivacyA}</p>
+    </section>
     <p><a href={hrefFor(homePath(locale))}>{copy.back}</a></p>
   </article>
 </Base>
 
 <style>
   .pdf-page .hero { margin-bottom: 24px; }
+  .pdf-language { margin: -8px 0 20px; font-size: 0.95rem; }
+  .pdf-faq { display: grid; gap: 10px; margin: 28px 0; }
+  .pdf-faq h2, .pdf-faq h3, .pdf-faq p { margin: 0; }
+  .pdf-faq h3 { margin-top: 8px; font-size: 1.05rem; }
   .editor-card {
     display: grid;
     gap: 14px;
