@@ -285,10 +285,13 @@ export function mountTool() {
   const actionBar = el('div', 'action-bar')
   const runBtn = el('button', 'btn')
   runBtn.type = 'button'
+  runBtn.textContent = config.kind === 'crop' ? t.crop : t.resize
   const zipBtn = el('button', 'btn')
   zipBtn.type = 'button'
+  zipBtn.textContent = t.downloadZip
   const saveBtn = el('button', 'btn secondary')
   saveBtn.type = 'button'
+  saveBtn.textContent = preferShare ? t.save : t.download
   actionBar.append(runBtn, saveBtn, zipBtn)
   actionBar.hidden = true
 
@@ -486,15 +489,53 @@ export function mountTool() {
       return
     }
     const accepted: File[] = []
-    let rejected = false
+    const rejected: File[] = []
     for (const file of incoming.slice(0, room)) {
       if (fileAllowed(file, config.accept)) accepted.push(file)
-      else rejected = true
+      else rejected.push(file)
     }
     alert.textContent = ''
     if (incoming.length > room) flash(fill(t.tooMany, { max: MAX_FILES }))
-    if (rejected) flash(fill(t.wrongType, { label: config.acceptLabel }))
+    if (rejected.length) showWrong(rejected)
     if (accepted.length) void decodeAll(accepted)
+  }
+
+  function normalizedExt(file: File): string {
+    const raw = file.name.includes('.') ? `.${file.name.split('.').pop()!.toLowerCase()}` : ''
+    if (raw === '.jpeg') return '.jpg'
+    if (raw === '.heif') return '.heic'
+    if (raw === '.jpg' || raw === '.png' || raw === '.webp' || raw === '.heic') return raw
+    const type = file.type.toLowerCase()
+    if (type === 'image/jpeg') return '.jpg'
+    if (type === 'image/png') return '.png'
+    if (type === 'image/webp') return '.webp'
+    if (type === 'image/heic' || type === 'image/heif') return '.heic'
+    return ''
+  }
+
+  function showWrong(files: File[]) {
+    const links: HTMLAnchorElement[] = []
+    const seen = new Set<string>()
+    for (const file of files) {
+      const match = config.suggest.find((item) => item.ext === normalizedExt(file))
+      if (!match || seen.has(match.href)) continue
+      seen.add(match.href)
+      const link = document.createElement('a')
+      link.href = match.href
+      link.textContent = match.title
+      links.push(link)
+    }
+    alert.replaceChildren(document.createTextNode(fill(t.wrongType, { label: config.acceptLabel })))
+    if (!links.length) return
+    const [before, after] = t.tryInstead.split('{list}')
+    alert.append(document.createTextNode(` ${before ?? ''}`))
+    links.forEach((link, index) => {
+      if (index > 0) {
+        alert.append(document.createTextNode(index === links.length - 1 ? ` ${t.or} ` : ', '))
+      }
+      alert.append(link)
+    })
+    alert.append(document.createTextNode(after ?? ''))
   }
 
   async function decodeAll(files: File[]) {

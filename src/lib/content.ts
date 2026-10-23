@@ -163,6 +163,7 @@ function readToolFile(locale: Locale, filename: string): ToolDoc {
     defaultOutput,
     defaultQuality,
     decode,
+    suggest: [],
   }
   return {
     locale,
@@ -200,6 +201,42 @@ function assertBilingual(en: ToolDoc[], ru: ToolDoc[]) {
   }
 }
 
+const FILE_FAMILIES = [
+  { ext: '.heic', match: ['.heic', '.heif'] },
+  { ext: '.jpg', match: ['.jpg', '.jpeg'] },
+  { ext: '.png', match: ['.png'] },
+  { ext: '.webp', match: ['.webp'] },
+]
+
+function suggestionsFor(tool: ToolDoc, tools: ToolDoc[]) {
+  const accept = new Set(tool.client.accept.map((ext) => ext.toLowerCase()))
+  const suggestions = []
+  for (const family of FILE_FAMILIES) {
+    if (family.match.some((ext) => accept.has(ext))) continue
+    const best = tools
+      .filter(
+        (candidate) =>
+          candidate.slug !== tool.slug &&
+          family.match.some((ext) => candidate.client.accept.some((item) => item.toLowerCase() === ext)),
+      )
+      .sort((a, b) => {
+        const rank = (kind: ToolKind) => (kind === 'convert' ? 0 : kind === 'compress' ? 1 : 2)
+        return (
+          rank(a.client.kind) - rank(b.client.kind) ||
+          a.client.accept.length - b.client.accept.length ||
+          a.order - b.order
+        )
+      })[0]
+    if (!best) continue
+    suggestions.push({
+      ext: family.ext,
+      href: hrefFor(toolPath(tool.locale, best.slug)),
+      title: best.title,
+    })
+  }
+  return suggestions
+}
+
 export function loadTools(locale: Locale): ToolDoc[] {
   const cached = toolCache.get(locale)
   if (cached) return cached
@@ -208,6 +245,7 @@ export function loadTools(locale: Locale): ToolDoc[] {
     .filter((name) => name.endsWith('.md'))
     .map((name) => readToolFile(locale, name))
     .sort((a, b) => a.order - b.order || a.slug.localeCompare(b.slug))
+  for (const tool of tools) tool.client.suggest = suggestionsFor(tool, tools)
   toolCache.set(locale, tools)
   if (toolCache.has('en') && toolCache.has('ru')) assertBilingual(toolCache.get('en')!, toolCache.get('ru')!)
   return tools
