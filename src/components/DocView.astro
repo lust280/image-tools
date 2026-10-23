@@ -1,0 +1,39 @@
+---
+import Base from '../layouts/Base.astro'
+import FaqList from './FaqList.astro'
+import type { Doc } from '../lib/content'
+import { pageJsonLd } from '../lib/schema'
+import { chrome } from '../i18n/ui'
+import { canonical, hrefFor, homePath, type Locale } from '../lib/urls'
+
+interface Props {
+  locale: Locale
+  path: string
+  doc: Doc
+}
+
+const { locale, path, doc } = Astro.props
+const copy = chrome[locale]
+const faqHeading = locale === 'ru' ? 'Вопросы' : 'Questions'
+---
+
+<Base
+  locale={locale}
+  path={path}
+  title={doc.seoTitle}
+  description={doc.description}
+  imageAlt={copy.imageAlt}
+  jsonLd={pageJsonLd(doc, canonical(path), canonical(homePath(locale)))}
+>
+  <article class="page wrap">
+    <nav class="crumb" aria-label={copy.breadcrumb}>
+      <a href={hrefFor(homePath(locale))}>Foto</a>
+      <span aria-hidden="true">/</span>
+      <span aria-current="page">{doc.h1}</span>
+    </nav>
+    <h1>{doc.h1}</h1>
+    <p class="lede">{doc.summary}</p>
+    <div class="prose" set:html={`${doc.introHtml}${doc.howToHtml}`} />
+    {doc.faqs.length > 0 && <FaqList heading={faqHeading} faqs={doc.faqs} />}
+  </article>
+</Base>

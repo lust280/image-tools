@@ -1,0 +1,23 @@
+---
+import DonateLink from './DonateLink.astro'
+
+interface Props {
+  locale: 'en' | 'ru'
+  tagline: string
+  privacyHref: string
+  privacyLabel: string
+  siteName: string
+  year: number
+}
+
+const { locale, tagline, privacyHref, privacyLabel, siteName, year } = Astro.props
+---
+
+<footer class="site-footer">
+  <div class="wrap footer-meta">
+    <p class="footer-line">{tagline}</p>
+    <a href={privacyHref}>{privacyLabel}</a>
+    <DonateLink locale={locale} />
+    <p>© {year} {siteName}</p>
+  </div>
+</footer>

@@ -1,0 +1,35 @@
+{
+  "_comment": "Shown on tool pages only when features.affiliate.enabled is true in shared/features.config.ts. Replace href with your affiliate URL before turning it on.",
+  "disclosure": {
+    "en": "Partner links",
+    "ru": "Партнёрские ссылки"
+  },
+  "heading": {
+    "en": "Need a fuller editor?",
+    "ru": "Нужен полноценный редактор?"
+  },
+  "items": [
+    {
+      "href": "https://www.canva.com/",
+      "label": {
+        "en": "Need more? Try Canva",
+        "ru": "Нужно больше? Попробуйте Canva"
+      },
+      "detail": {
+        "en": "Templates and layout tools when a quick conversion is not enough.",
+        "ru": "Шаблоны и макеты, если простой конвертации мало."
+      }
+    },
+    {
+      "href": "https://www.adobe.com/products/photoshop.html",
+      "label": {
+        "en": "Need more? Try Photoshop",
+        "ru": "Нужно больше? Попробуйте Photoshop"
+      },
+      "detail": {
+        "en": "Desktop retouching and compositing for heavier edits.",
+        "ru": "Ретушь и монтаж на компьютере, когда правки серьёзнее."
+      }
+    }
+  ]
+}

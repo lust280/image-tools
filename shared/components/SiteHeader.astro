@@ -1,0 +1,43 @@
+---
+interface Alternate {
+  code: string
+  label: string
+  href: string
+  current: boolean
+  hreflang: string
+}
+
+interface Props {
+  siteName: string
+  homeHref: string
+  languageLabel: string
+  alternates: Alternate[]
+}
+
+const { siteName, homeHref, languageLabel, alternates } = Astro.props
+---
+
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href={homeHref}>
+      <slot />
+      <span>{siteName}</span>
+    </a>
+    <nav class="langs" aria-label={languageLabel}>
+      {
+        alternates.map((alt) =>
+          alt.current ? (
+            <span class="lang-link is-current" aria-current="true" lang={alt.hreflang}>
+              {alt.code}
+              <span class="sr-only">{alt.label}</span>
+            </span>
+          ) : (
+            <a class="lang-link" href={alt.href} hrefLang={alt.hreflang} lang={alt.hreflang} aria-label={alt.label}>
+              {alt.code}
+            </a>
+          ),
+        )
+      }
+    </nav>
+  </div>
+</header>

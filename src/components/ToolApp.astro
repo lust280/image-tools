@@ -1,0 +1,21 @@
+---
+import type { ToolClientConfig } from '../lib/tool-config'
+
+interface Props {
+  config: ToolClientConfig
+  noscript: string
+}
+
+const { config, noscript } = Astro.props
+const json = JSON.stringify(config).replace(/</g, '\\u003c')
+---
+
+<div id="tool"></div>
+<script id="tool-config" type="application/json" is:inline set:html={json}></script>
+<noscript>
+  <p class="noscript">{noscript}</p>
+</noscript>
+<script>
+  import { mountTool } from '../scripts/tool-app'
+  mountTool()
+</script>

@@ -1,0 +1,33 @@
+---
+import { features } from '../features.config'
+
+const analytics = features.analytics
+const plausible = analytics.enabled && analytics.provider === 'plausible' && analytics.domain.length > 0
+const gtag = analytics.enabled && analytics.provider === 'gtag' && analytics.measurementId.length > 0
+---
+
+{
+  plausible && (
+    <script defer data-domain={analytics.domain} src="https://plausible.io/js/script.js"></script>
+  )
+}
+{
+  gtag && (
+    <>
+      <script async src={`https://www.googletagmanager.com/gtag/js?id=${analytics.measurementId}`}></script>
+      <script is:inline define:vars={{ measurementId: analytics.measurementId }}>
+        window.dataLayer = window.dataLayer || []
+        function gtag() {
+          window.dataLayer.push(arguments)
+        }
+        gtag('js', new Date())
+        gtag('config', measurementId)
+      </script>
+    </>
+  )
+}
+{
+  !plausible && !gtag && (
+    <Fragment set:html={'<!-- Analytics disabled. Configure shared/features.config.ts -->'} />
+  )
+}

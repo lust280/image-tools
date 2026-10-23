@@ -1,0 +1,8 @@
+---
+import HomeView from '../components/HomeView.astro'
+import { loadDoc, loadTools } from '../lib/content'
+
+const locale = 'en' as const
+---
+
+<HomeView locale={locale} home={loadDoc(locale, 'home')} tools={loadTools(locale)} />

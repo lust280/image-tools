@@ -1,0 +1,19 @@
+---
+import ToolView from '../components/ToolView.astro'
+import { loadTools, type ToolDoc } from '../lib/content'
+
+export function getStaticPaths() {
+  return loadTools('en').map((tool) => ({
+    params: { slug: tool.slug },
+    props: { tool },
+  }))
+}
+
+interface Props {
+  tool: ToolDoc
+}
+
+const { tool } = Astro.props
+---
+
+<ToolView tool={tool} />

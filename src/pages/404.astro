@@ -1,0 +1,26 @@
+---
+import Base from '../layouts/Base.astro'
+import { hrefFor, homePath } from '../lib/urls'
+
+const path = '/'
+---
+
+<Base
+  locale="en"
+  path={path}
+  title="Page not found | Foto"
+  description="That page is not on Foto."
+  imageAlt="Foto"
+  noindex={true}
+>
+  <article class="page wrap not-found">
+    <h1>That page is not on Foto</h1>
+    <p class="lede">The link may be old, or the address has a typo.</p>
+    <p><a class="btn" href={hrefFor(homePath('en'))}>Back to Foto</a></p>
+    <div lang="ru">
+      <h2>Такой страницы нет</h2>
+      <p>Ссылка устарела или в адресе опечатка.</p>
+      <p><a class="btn secondary" href={hrefFor(homePath('ru'))}>На главную</a></p>
+    </div>
+  </article>
+</Base>

@@ -1,0 +1,38 @@
+---
+import ToolIcon from './ToolIcon.astro'
+import type { ToolDoc } from '../lib/content'
+import { hrefFor, toolPath } from '../lib/urls'
+
+interface Props {
+  heading: string
+  tools: ToolDoc[]
+}
+
+const { heading, tools } = Astro.props
+---
+
+{
+  tools.length > 0 && (
+    <section aria-labelledby="related-heading">
+      <h2 id="related-heading" class="section-title">
+        {heading}
+      </h2>
+      <ul class="related-grid">
+        {tools.map((tool) => (
+          <li>
+            <a class="tool-card" href={hrefFor(toolPath(tool.locale, tool.slug))}>
+              <ToolIcon name={tool.icon} />
+              <span>
+                <h3>{tool.title}</h3>
+                <p>{tool.summary}</p>
+              </span>
+              <span class="chev" aria-hidden="true">
+                →
+              </span>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </section>
+  )
+}

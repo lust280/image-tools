@@ -1,0 +1,29 @@
+---
+import { features } from '../features.config'
+
+interface Props {
+  slot: 'top' | 'afterTool' | 'footer'
+}
+
+const { slot } = Astro.props
+const ads = features.adsense
+const slotId = ads.slots[slot]
+const show = ads.enabled && ads.clientId.length > 0 && slotId.length > 0
+---
+
+{
+  show ? (
+    <aside class="ad-slot wrap" aria-label="Advertisement">
+      <ins
+        class="adsbygoogle"
+        style="display:block"
+        data-ad-client={ads.clientId}
+        data-ad-slot={slotId}
+        data-ad-format="auto"
+        data-full-width-responsive="true"
+      />
+    </aside>
+  ) : (
+    <Fragment set:html={`<!-- AdSense slot "${slot}" disabled in shared/features.config.ts -->`} />
+  )
+}
