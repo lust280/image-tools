@@ -1,0 +1,61 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      # Optional. Empty repository variables fall back to site.config.ts.
+      PUBLIC_SITE_ROOT: ${{ vars.PUBLIC_SITE_ROOT }}
+      PUBLIC_GOOGLE_SITE_VERIFICATION: ${{ vars.PUBLIC_GOOGLE_SITE_VERIFICATION }}
+      PUBLIC_BING_SITE_VERIFICATION: ${{ vars.PUBLIC_BING_SITE_VERIFICATION }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+      - name: Setup Node
+        uses: actions/setup-node@v7
+        with:
+          node-version: 22
+          cache: npm
+      - name: Install
+        run: npm ci
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@v6
+        with:
+          # Turns Pages on (source: GitHub Actions) when it is still off.
+          # GitHub requires a token other than the default GITHUB_TOKEN for
+          # this call (a PAT with repo scope, or a GitHub App with
+          # administration:write and pages:write). If the step fails, enable
+          # Pages once in Settings → Pages → Build and deployment → GitHub Actions,
+          # then re-run the workflow.
+          enablement: true
+      - name: Build
+        run: npm run build
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v5
+        with:
+          path: dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v5

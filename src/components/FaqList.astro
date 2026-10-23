@@ -1,0 +1,22 @@
+---
+import type { Faq } from '../lib/content'
+
+interface Props {
+  heading: string
+  faqs: Faq[]
+}
+
+const { heading, faqs } = Astro.props
+---
+
+<section class="faq" aria-labelledby="faq-heading">
+  <h2 id="faq-heading">{heading}</h2>
+  {
+    faqs.map((faq) => (
+      <div class="faq-item">
+        <h3>{faq.q}</h3>
+        <div set:html={faq.aHtml} />
+      </div>
+    ))
+  }
+</section>

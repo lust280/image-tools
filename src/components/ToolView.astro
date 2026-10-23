@@ -1,0 +1,59 @@
+---
+import Base from '../layouts/Base.astro'
+import AffiliateSlot from './AffiliateSlot.astro'
+import FaqList from './FaqList.astro'
+import RelatedTools from './RelatedTools.astro'
+import ToolApp from './ToolApp.astro'
+import { loadTools, type ToolDoc } from '../lib/content'
+import { toolJsonLd } from '../lib/schema'
+import { chrome } from '../i18n/ui'
+import { canonical, hrefFor, homePath, toolPath } from '../lib/urls'
+
+interface Props {
+  tool: ToolDoc
+}
+
+const { tool } = Astro.props
+const copy = chrome[tool.locale]
+const path = toolPath(tool.locale, tool.slug)
+const all = loadTools(tool.locale)
+const related = tool.related
+  .map((slug) => all.find((item) => item.slug === slug))
+  .filter((item): item is ToolDoc => Boolean(item))
+const faqHeading = tool.locale === 'ru' ? 'Вопросы' : 'Questions'
+const noscript =
+  tool.locale === 'ru'
+    ? 'Инструмент работает в браузере и нуждается в JavaScript. Файлы всё равно никуда не отправляются.'
+    : 'This tool runs in your browser and needs JavaScript. Your files are still never uploaded.'
+---
+
+<Base
+  locale={tool.locale}
+  path={path}
+  title={tool.seoTitle}
+  description={tool.description}
+  imageAlt={copy.imageAlt}
+  jsonLd={toolJsonLd(tool, canonical(path), canonical(homePath(tool.locale)))}
+>
+  <article class="page wrap">
+    <nav class="crumb" aria-label={copy.breadcrumb}>
+      <a href={hrefFor(homePath(tool.locale))}>Foto</a>
+      <span aria-hidden="true">/</span>
+      <span aria-current="page">{tool.title}</span>
+    </nav>
+    <div class="tool-layout">
+      <div>
+        <h1>{tool.h1}</h1>
+        <p class="lede">{tool.summary}</p>
+        <ToolApp config={tool.client} noscript={noscript} />
+        <AffiliateSlot locale={tool.locale} />
+      </div>
+      <div class="tool-side">
+        {tool.introHtml && <div class="prose" set:html={tool.introHtml} />}
+        {tool.howToHtml && <div class="prose" set:html={tool.howToHtml} />}
+        <RelatedTools heading={copy.related} tools={related} />
+      </div>
+    </div>
+    <FaqList heading={faqHeading} faqs={tool.faqs} />
+  </article>
+</Base>

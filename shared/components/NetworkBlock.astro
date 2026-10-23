@@ -1,0 +1,28 @@
+---
+import { network } from '../network.config'
+
+interface Props {
+  locale: 'en' | 'ru'
+  homeHref: string
+}
+
+const { locale, homeHref } = Astro.props
+---
+
+<section class="network wrap" aria-labelledby="network-heading">
+  <h2 id="network-heading">{network.moreLabel[locale]}</h2>
+  <p class="network-intro">{network.intro[locale]}</p>
+  <ul class="network-list">
+    {
+      network.sites.map((entry) => (
+        <li>
+          <a class="network-card" href={entry.current ? homeHref : entry.url}>
+            <span class="network-name">{entry.name}</span>
+            {entry.current && <span class="pill">{network.thisSiteLabel[locale]}</span>}
+            <span class="network-desc">{entry.description[locale]}</span>
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+</section>

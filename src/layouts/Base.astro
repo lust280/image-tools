@@ -1,0 +1,76 @@
+---
+import '../../shared/tokens.css'
+import '../../shared/layout.css'
+import '../styles/site.css'
+import SiteHeader from '../../shared/components/SiteHeader.astro'
+import SiteFooter from '../../shared/components/SiteFooter.astro'
+import NetworkBlock from '../../shared/components/NetworkBlock.astro'
+import AdSlot from '../../shared/components/AdSlot.astro'
+import Analytics from '../../shared/components/Analytics.astro'
+import Seo from '../../shared/components/Seo.astro'
+import LogoMark from '../components/LogoMark.astro'
+import { absoluteAsset, assetHref, site, sitemapUrl } from '../../site.config'
+import { alternates, canonical, hrefFor, homePath, privacyPath, switcher, type Locale } from '../lib/urls'
+import { chrome } from '../i18n/ui'
+
+interface Props {
+  locale: Locale
+  path: string
+  title: string
+  description: string
+  imageAlt: string
+  jsonLd?: unknown
+  noindex?: boolean
+}
+
+const { locale, path, title, description, imageAlt, jsonLd, noindex = false } = Astro.props
+const copy = chrome[locale]
+const year = new Date().getFullYear()
+---
+
+<html lang={locale}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content={site.themeColor} />
+    <link rel="icon" href={assetHref('/favicon.svg')} type="image/svg+xml" />
+    <link rel="icon" href={assetHref('/favicon-32.png')} type="image/png" sizes="32x32" />
+    <link rel="apple-touch-icon" href={assetHref('/apple-touch-icon.png')} />
+    <Seo
+      title={title}
+      description={description}
+      canonical={canonical(path)}
+      locale={locale}
+      alternates={alternates(path)}
+      image={absoluteAsset('/og.png')}
+      imageAlt={imageAlt}
+      siteName={site.name}
+      noindex={noindex}
+      jsonLd={jsonLd}
+      verification={site.verification}
+      sitemapUrl={sitemapUrl}
+    />
+    <Analytics />
+  </head>
+  <body>
+    <a class="skip" href="#main">{copy.skip}</a>
+    <SiteHeader siteName={site.name} homeHref={hrefFor(homePath(locale))} languageLabel={copy.language} alternates={switcher(locale, path)}>
+      <LogoMark />
+    </SiteHeader>
+    <AdSlot slot="top" />
+    <main id="main">
+      <slot />
+    </main>
+    <AdSlot slot="afterTool" />
+    <NetworkBlock locale={locale} homeHref={hrefFor(homePath(locale))} />
+    <SiteFooter
+      locale={locale}
+      tagline={copy.tagline}
+      privacyHref={hrefFor(privacyPath(locale))}
+      privacyLabel={copy.privacy}
+      siteName={site.name}
+      year={year}
+    />
+    <AdSlot slot="footer" />
+  </body>
+</html>

@@ -1,0 +1,74 @@
+---
+import Base from '../layouts/Base.astro'
+import FaqList from './FaqList.astro'
+import ToolIcon from './ToolIcon.astro'
+import type { Doc, ToolDoc } from '../lib/content'
+import { homeJsonLd } from '../lib/schema'
+import { absoluteUrl } from '../../site.config'
+import { chrome } from '../i18n/ui'
+import { canonical, hrefFor, homePath, toolPath, type Locale } from '../lib/urls'
+
+interface Props {
+  locale: Locale
+  home: Doc
+  tools: ToolDoc[]
+}
+
+const { locale, home, tools } = Astro.props
+const copy = chrome[locale]
+const path = homePath(locale)
+const url = canonical(path)
+const first = tools[0]
+const faqHeading = locale === 'ru' ? 'Вопросы' : 'Questions'
+---
+
+<Base
+  locale={locale}
+  path={path}
+  title={home.seoTitle}
+  description={home.description}
+  imageAlt={copy.imageAlt}
+  jsonLd={homeJsonLd(
+    home,
+    url,
+    tools.map((tool) => ({ title: tool.title, url: absoluteUrl(toolPath(locale, tool.slug)) })),
+  )}
+>
+  <article class="page wrap">
+    <header class="hero">
+      <p class="kicker">{copy.kicker}</p>
+      <h1>{home.h1}</h1>
+      <p class="lede">{home.summary}</p>
+      <div class="hero-actions">
+        <a class="btn" href="#tools">{copy.browse}</a>
+        {first && <a class="btn secondary" href={hrefFor(toolPath(locale, first.slug))}>{first.title}</a>}
+      </div>
+      <ul class="trust">
+        {copy.trust.map((item) => <li>{item}</li>)}
+      </ul>
+    </header>
+    <section id="tools" aria-labelledby="tools-heading">
+      <h2 id="tools-heading" class="section-title">{copy.allTools}</h2>
+      <ul class="tool-grid">
+        {
+          tools.map((tool) => (
+            <li>
+              <a class="tool-card" href={hrefFor(toolPath(locale, tool.slug))}>
+                <ToolIcon name={tool.icon} />
+                <span>
+                  <h3>{tool.title}</h3>
+                  <p>{tool.summary}</p>
+                </span>
+                <span class="chev" aria-hidden="true">
+                  →
+                </span>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </section>
+    <div class="prose" set:html={`${home.introHtml}${home.howToHtml}`} />
+    <FaqList heading={faqHeading} faqs={home.faqs} />
+  </article>
+</Base>

@@ -1,0 +1,34 @@
+---
+import { features } from '../../shared/features.config'
+import { loadAffiliate } from '../lib/content'
+import type { Locale } from '../lib/urls'
+
+interface Props {
+  locale: Locale
+}
+
+const { locale } = Astro.props
+const affiliate = loadAffiliate(locale)
+const show = features.affiliate.enabled && affiliate.items.length > 0
+---
+
+{
+  show ? (
+    <aside class="affiliate" aria-label={affiliate.disclosure}>
+      <p class="affiliate-kicker">{affiliate.disclosure}</p>
+      <h2>{affiliate.heading}</h2>
+      <ul>
+        {affiliate.items.map((item) => (
+          <li>
+            <a href={item.href} rel="sponsored nofollow noopener" target="_blank">
+              {item.label}
+            </a>
+            {item.detail && <p>{item.detail}</p>}
+          </li>
+        ))}
+      </ul>
+    </aside>
+  ) : (
+    <Fragment set:html={'<!-- Affiliate slot disabled. Set features.affiliate.enabled and edit data/affiliate.json -->'} />
+  )
+}

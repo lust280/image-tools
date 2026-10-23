@@ -1,0 +1,9 @@
+---
+import DocView from '../../components/DocView.astro'
+import { loadDoc } from '../../lib/content'
+import { privacyPath } from '../../lib/urls'
+
+const locale = 'ru' as const
+---
+
+<DocView locale={locale} path={privacyPath(locale)} doc={loadDoc(locale, 'privacy')} />
