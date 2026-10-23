@@ -13,7 +13,7 @@ npm run build    # writes dist/, including sitemap.xml and robots.txt
 npm run preview
 ```
 
-Node 22.23 or newer.
+Node 22.23.4 or newer. Astro 7 refuses older 22.x releases, including the 22.23.3 build still cached on GitHub-hosted runners.
 
 ## Layout
 
