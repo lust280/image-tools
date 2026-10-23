@@ -41,7 +41,9 @@ Processing stays on the device: canvas for JPG, PNG, and WebP, and `heic-to` onl
 
 ## PDF tools
 
-The separate `/pdf-tools/` page (and `/ru/pdf-tools/`) can merge PDF files and extract selected pages. Processing uses `pdf-lib` in the browser; the selected documents are not uploaded. The PDF section is linked from the home page and does not change the image tools.
+The separate `/pdf-tools/` page (and `/ru/pdf-tools/`) previews PDFs in the browser and lets people add text and PNG/JPG images, cover an area, merge PDFs, or extract selected pages. Processing uses PDF.js and `pdf-lib`; documents and images are not uploaded.
+
+Text and images are added as overlays. Replacing existing text means covering it and placing new text; nearby text does not reflow. A white cover is visual only and does not securely remove the original content. Scanned pages need OCR, which is not included. New text supports Latin and Cyrillic through the bundled Noto Sans font (`public/fonts/NotoSans-VF.ttf`, SIL Open Font License 1.1; see `public/fonts/OFL.txt`).
 
 ## Custom domain
 

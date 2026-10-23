@@ -12,12 +12,14 @@
     "preview": "astro preview --host 127.0.0.1"
   },
   "dependencies": {
+    "@pdf-lib/fontkit": "1.1.1",
     "astro": "^7.4.2",
     "fflate": "^0.8.3",
     "gray-matter": "^4.0.3",
     "heic-to": "^1.6.6",
     "marked": "^18.1.1",
-    "pdf-lib": "1.17.1"
+    "pdf-lib": "1.17.1",
+    "pdfjs-dist": "6.4.299"
   },
   "devDependencies": {
     "typescript": "^5.9.3"
