@@ -1,7 +1,7 @@
 /**
- * Monetization and measurement. Everything here ships off.
- * The built HTML contains no ad, analytics, donate, or affiliate links
- * until the matching `enabled` flag is true.
+ * Monetization and measurement. Ads, donate, and affiliate ship off
+ * until the matching `enabled` flag is true. Analytics renders only for
+ * the selected provider.
  *
  * Donate URL lives here. Affiliate link text lives in data/affiliate.json.
  */
@@ -16,10 +16,12 @@ export const features = {
     },
   },
   analytics: {
-    enabled: false,
-    provider: 'none' as 'none' | 'plausible' | 'gtag',
+    enabled: true,
+    provider: 'goatcounter' as 'none' | 'plausible' | 'gtag' | 'goatcounter',
     domain: '',
     measurementId: '',
+    /** GoatCounter count URL, used when provider is "goatcounter". */
+    endpoint: 'https://foto-tools.goatcounter.com/count',
   },
   donate: {
     enabled: false,

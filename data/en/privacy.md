@@ -1,6 +1,6 @@
 ---
 seoTitle: "Privacy — Foto image tools"
-description: "Foto processes images in your browser. Photos are not uploaded, and the site does not run ads or analytics."
+description: "Foto processes images in your browser. Photos are not uploaded. Visits are counted with GoatCounter: no cookies and no personal data."
 h1: "Privacy"
 summary: "Your photos stay on this device. This page explains what the site actually loads."
 ---
@@ -15,7 +15,7 @@ The site is hosted as static files. Loading a page requests HTML, CSS, and JavaS
 
 ## Ads and measurement
 
-This site does not ship advertising or analytics scripts. If that ever changes, this page will say so before those scripts are turned on.
+This site does not ship advertising. It uses GoatCounter, a privacy-friendly analytics service with no cookies and no personal data tracking.
 
 Questions and bug reports go to the [GitHub repository](https://github.com/lust280/image-tools).
 
