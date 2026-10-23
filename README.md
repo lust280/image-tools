@@ -79,12 +79,12 @@ To verify the property, paste the tokens into `site.verification` in `site.confi
 
 ## Monetization
 
-All of these are off. A production build contains no ad script, analytics script, donate link, or affiliate link until you flip the matching flag.
+Ads, donate, and affiliate are off. Analytics is on and uses GoatCounter. A production build contains no ad script, donate link, or affiliate link until you flip the matching flag.
 
 In `shared/features.config.ts`:
 
 - `adsense` — client id and slot ids. Slots: `top`, `afterTool`, `footer`.
-- `analytics` — `provider: "plausible"` or `"gtag"`, plus domain or measurement id.
+- `analytics` — `provider: "goatcounter"` (enabled; `endpoint` is the count URL), `"plausible"` (domain), or `"gtag"` (measurement id).
 - `donate` — set `enabled: true` and a full URL (Buy Me a Coffee or similar). The label is translated. The button sits in the footer.
 - `affiliate` — set `enabled: true`. Link text and URLs live in `data/affiliate.json`. Tool pages render them with `rel="sponsored nofollow"`. Replace the sample Canva and Photoshop URLs with your own affiliate links before enabling.
 
