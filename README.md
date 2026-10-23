@@ -41,9 +41,9 @@ Processing stays on the device: canvas for JPG, PNG, and WebP, and `heic-to` onl
 
 ## PDF tools
 
-The separate `/pdf-tools/` page (and `/ru/pdf-tools/`) previews PDFs in the browser and lets people add text and PNG/JPG images, cover an area, merge PDFs, or extract selected pages. Processing uses PDF.js and `pdf-lib`; documents and images are not uploaded.
+The separate `/pdf-tools/` page (and `/ru/pdf-tools/`) previews PDFs in the browser and lets people add text, PNG/JPG images, and a drawn signature; visually cover an area; merge PDFs; extract, reorder, or omit pages; rotate selected pages; raster-compress a PDF; and create a PDF from JPG photos. Processing uses PDF.js and `pdf-lib`; documents and images are not uploaded.
 
-Text and images are added as overlays. Replacing existing text means covering it and placing new text; nearby text does not reflow. A white cover is visual only and does not securely remove the original content. Scanned pages need OCR, which is not included. New text supports Latin and Cyrillic through the bundled Noto Sans font (`public/fonts/NotoSans-VF.ttf`, SIL Open Font License 1.1; see `public/fonts/OFL.txt`).
+Text, images, and signatures are added as overlays. Replacing existing text means covering it and placing new text; nearby text does not reflow. A white cover is visual only and does not securely remove the original content. PDF compression rasterizes pages, so text in compressed files cannot be selected or searched; the result may be larger for some inputs. Page reordering creates a new PDF from the page numbers entered; omitted pages are removed. Scanned pages need OCR, which is not included. Filling interactive PDF form fields is not included. New text supports Latin and Cyrillic through the bundled Noto Sans font (`public/fonts/NotoSans-VF.ttf`, SIL Open Font License 1.1; see `public/fonts/OFL.txt`).
 
 ## Custom domain
 

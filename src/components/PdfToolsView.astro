@@ -12,12 +12,12 @@ const { locale } = Astro.props
 const copy = locale === 'ru'
   ? {
       path: '/ru/pdf-tools/',
-      title: 'PDF-редактор онлайн бесплатно: текст, фото, страницы — Foto',
-      description: 'Бесплатно редактируйте PDF в браузере: добавляйте текст и фото, объединяйте документы и извлекайте страницы. Файлы остаются на вашем устройстве.',
+      title: 'PDF-редактор бесплатно: сжать, подписать, объединить — Foto',
+      description: 'Редактируйте PDF в браузере: добавляйте подпись и фото, сжимайте и поворачивайте страницы, объединяйте файлы и конвертируйте JPG в PDF. Без загрузки на сервер.',
       imageAlt: 'Foto — PDF-инструменты в браузере',
       crumb: 'PDF-инструменты',
       h1: 'Бесплатный PDF-редактор и инструменты онлайн',
-      lede: 'Добавляйте текст и фото в PDF, объединяйте документы и извлекайте страницы. Всё работает в браузере, файлы не загружаются на сервер.',
+      lede: 'Добавляйте текст, фото и подпись, сжимайте и поворачивайте PDF, удаляйте и переставляйте страницы, объединяйте документы и превращайте JPG в PDF. Файлы остаются в браузере.',
       merge: 'Объединить PDF',
       mergeHelp: 'Выберите два или больше PDF. Документы будут объединены в выбранном порядке.',
       chooseMany: 'Выбрать PDF-файлы',
@@ -62,16 +62,26 @@ const copy = locale === 'ru'
       faqMergeA: 'Для объединения выберите несколько PDF в нужном порядке и нажмите «Объединить и скачать». Для извлечения выберите один документ и укажите номера страниц или диапазоны, например 1-3, 5.',
       faqPrivacyQ: 'Загружаются ли мои PDF на сайт?',
       faqPrivacyA: 'Нет. Обработка выполняется в браузере на вашем устройстве; выбранные файлы не отправляются на сервер.',
+      faqCompressQ: 'Как сжать PDF и уменьшить размер файла?',
+      faqCompressA: 'Выберите PDF и качество сжатия. Страницы сохраняются как изображения: файл может стать меньше, но текст потеряет возможность выделения и поиска. Результат зависит от исходного документа.',
+      faqPagesQ: 'Можно ли удалить, переставить или повернуть страницы?',
+      faqPagesA: 'Да. Введите номера в нужном порядке, чтобы создать копию только с этими страницами, или укажите страницы для поворота на 90 градусов.',
+      faqJpgQ: 'Как сделать PDF из JPG-фотографий?',
+      faqJpgA: 'Выберите одно или несколько JPG-фото. Каждое будет помещено на отдельную страницу нового PDF.',
       switchLanguage: 'English version',
+      compress: 'Сжать PDF', compressHelp: 'Уменьшите размер файла, преобразовав страницы в изображения.', compressQuality: 'Качество', compressButton: 'Сжать и скачать',
+      pages: 'Страницы PDF', pagesHelp: 'Введите страницы в нужном порядке. Пропущенные номера будут удалены. Чтобы повернуть страницы, выберите номера ниже.', rotatePages: 'Страницы для поворота', pagesButton: 'Сохранить страницы', rotateButton: 'Повернуть на 90°',
+      imagesPdf: 'JPG в PDF', imagesPdfHelp: 'Выберите один или несколько JPG. Каждое фото станет отдельной страницей.', imagesPdfButton: 'Создать PDF',
+      sign: 'Подписать PDF', signHelp: 'Добавьте нарисованную подпись на страницу в редакторе.', signMode: 'Нарисовать подпись',
     }
   : {
       path: '/pdf-tools/',
-      title: 'Free PDF Editor Online: Add Text, Photos & Pages — Foto',
-      description: 'Edit PDFs free in your browser: add text and photos, merge documents, or extract pages. Your files stay on your device.',
+      title: 'Free PDF Editor: Compress, Sign, Merge & Convert JPG — Foto',
+      description: 'Edit PDFs in your browser: add a signature and photos, compress or rotate pages, merge files, and convert JPG to PDF. No server upload.',
       imageAlt: 'Foto — PDF tools in your browser',
       crumb: 'PDF tools',
       h1: 'Free PDF editor and online tools',
-      lede: 'Add text and photos to PDFs, merge documents, and extract pages. Everything runs in your browser; your files are not uploaded.',
+      lede: 'Add text, photos, and a signature; compress and rotate PDFs; remove or reorder pages; merge documents; and turn JPG images into PDF. Files stay in your browser.',
       merge: 'Merge PDFs',
       mergeHelp: 'Choose two or more PDFs. They will be merged in the order you select them.',
       chooseMany: 'Choose PDF files',
@@ -116,7 +126,17 @@ const copy = locale === 'ru'
       faqMergeA: 'To merge, select multiple PDFs in the order you want and choose Merge and download. To extract pages, select one PDF and enter page numbers or ranges such as 1-3, 5.',
       faqPrivacyQ: 'Are my PDF files uploaded to the website?',
       faqPrivacyA: 'No. Processing happens in your browser on your device; selected files are not sent to a server.',
+      faqCompressQ: 'How do I compress a PDF and reduce its file size?',
+      faqCompressA: 'Choose a PDF and a compression quality. Pages are saved as images: the file may get smaller, but text will no longer be selectable or searchable. Results depend on the source document.',
+      faqPagesQ: 'Can I delete, reorder, or rotate PDF pages?',
+      faqPagesA: 'Yes. Enter page numbers in the order you want to create a copy with those pages, or specify pages to rotate by 90 degrees.',
+      faqJpgQ: 'How do I make a PDF from JPG photos?',
+      faqJpgA: 'Choose one or more JPG images. Each photo is placed on its own page in a new PDF.',
       switchLanguage: 'Русская версия',
+      compress: 'Compress PDF', compressHelp: 'Reduce the file size by converting pages to images.', compressQuality: 'Quality', compressButton: 'Compress and download',
+      pages: 'PDF pages', pagesHelp: 'Enter page numbers in the order you want. Omitted pages will be removed. Choose pages below to rotate them.', rotatePages: 'Pages to rotate', pagesButton: 'Save pages', rotateButton: 'Rotate 90°',
+      imagesPdf: 'JPG to PDF', imagesPdfHelp: 'Choose one or more JPG images. Each photo becomes a separate page.', imagesPdfButton: 'Create PDF',
+      sign: 'Sign a PDF', signHelp: 'Add a drawn signature to a page in the editor.', signMode: 'Draw signature',
     }
 const homeUrl = canonical(homePath(locale))
 const jsonLd = {
@@ -176,6 +196,7 @@ const jsonLd = {
             <option value="text">{copy.addText}</option>
             <option value="cover">{copy.cover}</option>
             <option value="image">{copy.addImage}</option>
+            <option value="signature">{copy.signMode}</option>
           </select>
         </label>
         <label class="field text-option">
@@ -205,6 +226,31 @@ const jsonLd = {
     </section>
 
     <div class="pdf-grid">
+      <section class="pdf-card" aria-labelledby="compress-heading">
+        <h2 id="compress-heading">{copy.compress}</h2>
+        <p>{copy.compressHelp} {locale === 'ru' ? 'Страницы станут изображениями, текст нельзя будет выделять или искать.' : 'Pages become images, so text will no longer be selectable or searchable.'}</p>
+        <label class="field"><span>{copy.compressQuality}</span><select data-compress-quality><option value="0.55">{locale === 'ru' ? 'Меньше файл' : 'Smaller file'}</option><option value="0.78" selected>{locale === 'ru' ? 'Сбалансированное' : 'Balanced'}</option><option value="0.92">{locale === 'ru' ? 'Выше качество' : 'Higher quality'}</option></select></label>
+        <label class="file-pick"><span>{copy.chooseOne}</span><input data-compress-file type="file" accept="application/pdf,.pdf" /></label>
+        <button class="btn" type="button" data-compress>{copy.compressButton}</button>
+      </section>
+
+      <section class="pdf-card" aria-labelledby="pages-heading">
+        <h2 id="pages-heading">{copy.pages}</h2>
+        <p>{copy.pagesHelp}</p>
+        <label class="file-pick"><span>{copy.chooseOne}</span><input data-manage-file type="file" accept="application/pdf,.pdf" /></label>
+        <label class="field"><span>{copy.pagesLabel}</span><input data-manage-order type="text" placeholder="1, 3-5, 2" /></label>
+        <label class="field"><span>{copy.rotatePages}</span><input data-rotate-range type="text" placeholder="1-2" /></label>
+        <button class="btn" type="button" data-manage-save>{copy.pagesButton}</button>
+        <button class="text-btn" type="button" data-rotate>{copy.rotateButton}</button>
+      </section>
+
+      <section class="pdf-card" aria-labelledby="images-pdf-heading">
+        <h2 id="images-pdf-heading">{copy.imagesPdf}</h2>
+        <p>{copy.imagesPdfHelp}</p>
+        <label class="file-pick"><span>{locale === 'ru' ? 'Выбрать JPG-фото' : 'Choose JPG images'}</span><input data-images-pdf-files type="file" accept="image/jpeg,.jpg,.jpeg" multiple /></label>
+        <button class="btn" type="button" data-images-pdf>{copy.imagesPdfButton}</button>
+      </section>
+
       <section class="pdf-card" aria-labelledby="merge-heading">
         <h2 id="merge-heading">{copy.merge}</h2>
         <p>{copy.mergeHelp}</p>
@@ -230,6 +276,7 @@ const jsonLd = {
         <button class="btn" type="button" data-extract>{copy.extractButton}</button>
       </section>
     </div>
+    <p class="local-note">{copy.sign}: {copy.signHelp}</p>
 
     <p class="local-note">{copy.localNote}</p>
     <p class="pdf-status" role="status" aria-live="polite" data-status></p>
@@ -243,6 +290,12 @@ const jsonLd = {
       <p>{copy.faqMergeA}</p>
       <h3>{copy.faqPrivacyQ}</h3>
       <p>{copy.faqPrivacyA}</p>
+      <h3>{copy.faqCompressQ}</h3>
+      <p>{copy.faqCompressA}</p>
+      <h3>{copy.faqPagesQ}</h3>
+      <p>{copy.faqPagesA}</p>
+      <h3>{copy.faqJpgQ}</h3>
+      <p>{copy.faqJpgA}</p>
     </section>
     <p><a href={hrefFor(homePath(locale))}>{copy.back}</a></p>
   </article>
@@ -333,6 +386,7 @@ const jsonLd = {
     const ru = root.dataset.locale === 'ru'
     const text = {
       ready: ru ? 'Готово. Файл скачан.' : 'Done. Your file has been downloaded.',
+      compressing: ru ? 'Сжимаем PDF…' : 'Compressing PDF…', creating: ru ? 'Создаём PDF…' : 'Creating PDF…',
       merging: ru ? 'Объединяем PDF…' : 'Merging PDFs…',
       extracting: ru ? 'Извлекаем страницы…' : 'Extracting pages…',
       errorFiles: ru ? 'Выберите PDF-файл или файлы.' : 'Choose one or more PDF files.',
@@ -345,6 +399,11 @@ const jsonLd = {
     const extractInput = root.querySelector('[data-extract-file]')
     const summary = root.querySelector('[data-merge-summary]')
     const rangeInput = root.querySelector('[data-page-range]')
+    const compressInput = root.querySelector('[data-compress-file]')
+    const compressQuality = root.querySelector('[data-compress-quality]')
+    const manageInput = root.querySelector('[data-manage-file]')
+    const manageOrder = root.querySelector('[data-manage-order]')
+    const rotateRange = root.querySelector('[data-rotate-range]')
 
     const editorFile = root.querySelector('[data-editor-file]')
     const pageNumber = root.querySelector('[data-page-number]')
@@ -397,6 +456,7 @@ const jsonLd = {
       error: ru ? 'Не удалось открыть или сохранить PDF. Файл может быть повреждён или защищён паролем.' : 'Could not open or save the PDF. The file may be damaged or password protected.',
       textMissing: ru ? 'Сначала введите текст.' : 'Enter some text first.',
       imageMissing: ru ? 'Сначала выберите PNG- или JPG-фото.' : 'Choose a PNG or JPG image first.',
+      signatureMissing: ru ? 'Не удалось создать подпись.' : 'Could not create the signature.',
     }
 
     const editorItemsForPage = () => editorItems.filter((item) => item.page === currentPage)
@@ -428,13 +488,22 @@ const jsonLd = {
           context.drawImage(item.preview, x, y, width, height)
         }
       }
-      if (draft) {
+      if (draft?.kind === 'cover') {
         context.fillStyle = 'rgba(255, 255, 255, 0.72)'
         context.fillRect(draft.x, draft.y, draft.width, draft.height)
         context.strokeStyle = '#245b4a'
         context.setLineDash([5, 4])
         context.strokeRect(draft.x, draft.y, draft.width, draft.height)
         context.setLineDash([])
+      } else if (draft?.kind === 'signature' && draft.points.length > 1) {
+        context.strokeStyle = '#171714'
+        context.lineWidth = 2.5
+        context.lineCap = 'round'
+        context.lineJoin = 'round'
+        context.beginPath()
+        context.moveTo(draft.points[0].x, draft.points[0].y)
+        draft.points.slice(1).forEach((point) => context.lineTo(point.x, point.y))
+        context.stroke()
       }
       if (editorUndo instanceof HTMLButtonElement) editorUndo.disabled = editorItems.length === 0
     }
@@ -497,7 +566,7 @@ const jsonLd = {
     })
     editorMode?.addEventListener('change', () => {
       root.querySelectorAll('.image-option').forEach((element) => { if (element instanceof HTMLElement) element.hidden = editorMode.value !== 'image' })
-      root.querySelectorAll('.text-option, .size-option').forEach((element) => { if (element instanceof HTMLElement) element.hidden = editorMode.value === 'image' })
+      root.querySelectorAll('.text-option, .size-option').forEach((element) => { if (element instanceof HTMLElement) element.hidden = editorMode.value === 'image' || editorMode.value === 'signature' })
       if (editCanvas instanceof HTMLCanvasElement) editCanvas.style.cursor = editorMode.value === 'cover' ? 'crosshair' : 'copy'
     })
     editorUndo?.addEventListener('click', async () => {
@@ -511,16 +580,17 @@ const jsonLd = {
 
     if (editCanvas instanceof HTMLCanvasElement) {
       editCanvas.addEventListener('pointerdown', (event) => {
-        if (!currentViewport || editorMode?.value !== 'cover') return
+        if (!currentViewport || !['cover', 'signature'].includes(editorMode?.value || '')) return
         const rect = editCanvas.getBoundingClientRect()
-        draft = { x: event.clientX - rect.left, y: event.clientY - rect.top, width: 0, height: 0 }
+        const x = event.clientX - rect.left, y = event.clientY - rect.top
+        draft = editorMode?.value === 'signature' ? { kind: 'signature', points: [{ x, y }] } : { kind: 'cover', x, y, width: 0, height: 0 }
         editCanvas.setPointerCapture(event.pointerId)
       })
       editCanvas.addEventListener('pointermove', (event) => {
         if (!draft) return
         const rect = editCanvas.getBoundingClientRect()
-        draft.width = event.clientX - rect.left - draft.x
-        draft.height = event.clientY - rect.top - draft.y
+        if (draft.kind === 'signature') draft.points.push({ x: event.clientX - rect.left, y: event.clientY - rect.top })
+        else { draft.width = event.clientX - rect.left - draft.x; draft.height = event.clientY - rect.top - draft.y }
         drawEditorItems()
       })
       editCanvas.addEventListener('pointerup', async (event) => {
@@ -528,13 +598,33 @@ const jsonLd = {
         const rect = editCanvas.getBoundingClientRect()
         const x = event.clientX - rect.left
         const y = event.clientY - rect.top
-        if (draft) {
+        if (draft?.kind === 'cover') {
           const left = Math.max(0, Math.min(draft.x, x))
           const top = Math.max(0, Math.min(draft.y, y))
           const width = Math.min(currentViewport.width - left, Math.abs(x - draft.x))
           const height = Math.min(currentViewport.height - top, Math.abs(y - draft.y))
           if (width > 5 && height > 5) editorItems.push({ kind: 'cover', page: currentPage, scale: currentViewport.scale, x: left / currentViewport.width, y: top / currentViewport.height, width: width / currentViewport.width, height: height / currentViewport.height })
           draft = null
+        } else if (draft?.kind === 'signature') {
+          const stroke = draft
+          draft = null
+          if (stroke.points.length > 1) {
+            const xs = stroke.points.map((point) => point.x), ys = stroke.points.map((point) => point.y)
+            const left = Math.min(...xs), top = Math.min(...ys), width = Math.max(12, Math.max(...xs) - left), height = Math.max(12, Math.max(...ys) - top)
+            const canvas = document.createElement('canvas'), scale = 2
+            canvas.width = Math.ceil(width * scale); canvas.height = Math.ceil(height * scale)
+            const context = canvas.getContext('2d')
+            if (context) {
+              context.scale(scale, scale); context.strokeStyle = '#171714'; context.lineWidth = 2.5; context.lineCap = 'round'; context.lineJoin = 'round'; context.beginPath()
+              context.moveTo(stroke.points[0].x - left, stroke.points[0].y - top)
+              stroke.points.slice(1).forEach((point) => context.lineTo(point.x - left, point.y - top)); context.stroke()
+              const blob = await new Promise((resolve) => canvas.toBlob(resolve, 'image/png'))
+              if (blob instanceof Blob) {
+                const bytes = new Uint8Array(await blob.arrayBuffer()), preview = await createImageBitmap(blob)
+                editorItems.push({ kind: 'image', page: currentPage, scale: currentViewport.scale, x: left / currentViewport.width, y: top / currentViewport.height, width: width / currentViewport.width, height: height / currentViewport.height, bytes, mime: 'image/png', preview })
+              }
+            }
+          }
         } else if (editorMode?.value === 'text') {
           const value = editorText instanceof HTMLTextAreaElement ? editorText.value.trim() : ''
           const size = textSize instanceof HTMLInputElement ? Math.max(6, Math.min(96, Number(textSize.value) || 18)) : 18
@@ -610,6 +700,82 @@ const jsonLd = {
     }
     const safeName = (name) => name.replace(/\.pdf$/i, '').replace(/[^\p{L}\p{N}._-]+/gu, '-') || 'document'
     const outputName = (names, suffix) => names.slice(0, 2).map(safeName).join('-') + (names.length > 2 ? '-and-more' : '') + suffix + '.pdf'
+
+    root.querySelector('[data-images-pdf]')?.addEventListener('click', async (event) => {
+      const button = event.currentTarget, input = root.querySelector('[data-images-pdf-files]')
+      if (!(button instanceof HTMLButtonElement) || !(input instanceof HTMLInputElement) || !input.files?.length || !status) { if (status) status.textContent = text.errorFiles; return }
+      button.disabled = true; status.textContent = text.creating
+      try {
+        const { PDFDocument } = await loadPdfLib(), output = await PDFDocument.create()
+        for (const file of input.files) {
+          const image = await output.embedJpg(await file.arrayBuffer()), page = output.addPage([image.width, image.height])
+          page.drawImage(image, { x: 0, y: 0, width: image.width, height: image.height })
+        }
+        download(await output.save(), 'photos.pdf'); status.textContent = text.ready
+      } catch { status.textContent = text.errorProcess } finally { button.disabled = false }
+    })
+
+    root.querySelector('[data-compress]')?.addEventListener('click', async (event) => {
+      const button = event.currentTarget, file = compressInput instanceof HTMLInputElement ? compressInput.files?.[0] : null
+      if (!(button instanceof HTMLButtonElement) || !file || !status) { if (status) status.textContent = text.errorFiles; return }
+      button.disabled = true; status.textContent = text.compressing
+      try {
+        const [pdfjs, { PDFDocument }] = await Promise.all([loadPdfJs(), loadPdfLib()])
+        const source = await pdfjs.getDocument({ data: new Uint8Array(await file.arrayBuffer()) }).promise
+        const output = await PDFDocument.create()
+        const quality = Number(compressQuality instanceof HTMLSelectElement ? compressQuality.value : 0.78)
+        for (let index = 1; index <= source.numPages; index++) {
+          const page = await source.getPage(index), viewport = page.getViewport({ scale: 1 })
+          const scale = Math.max(0.1, Math.min(1.5, Math.sqrt(2_000_000 / (viewport.width * viewport.height))))
+          const sized = page.getViewport({ scale })
+          const canvas = document.createElement('canvas'); canvas.width = Math.ceil(sized.width); canvas.height = Math.ceil(sized.height)
+          const context = canvas.getContext('2d')
+          if (!context) throw new Error('Canvas is not available')
+          await page.render({ canvas, canvasContext: context, viewport: sized }).promise
+          const blob = await new Promise((resolve, reject) => canvas.toBlob((result) => result ? resolve(result) : reject(new Error('JPEG encoding failed')), 'image/jpeg', quality))
+          const image = await output.embedJpg(await blob.arrayBuffer()), target = output.addPage([viewport.width, viewport.height])
+          target.drawImage(image, { x: 0, y: 0, width: viewport.width, height: viewport.height })
+          canvas.width = 0; canvas.height = 0
+          page.cleanup()
+        }
+        const result = await output.save(), originalSize = file.size
+        download(result, safeName(file.name) + '-compressed.pdf')
+        status.textContent = result.byteLength < originalSize
+          ? `${text.ready} ${ru ? `Размер: ${(originalSize / 1024).toFixed(0)} → ${(result.byteLength / 1024).toFixed(0)} КБ.` : `Size: ${(originalSize / 1024).toFixed(0)} → ${(result.byteLength / 1024).toFixed(0)} KB.`}`
+          : (ru ? 'PDF обработан, но файл не стал меньше. Попробуйте качество ниже.' : 'PDF processed, but the file did not get smaller. Try lower quality.')
+      } catch { status.textContent = text.errorProcess } finally { button.disabled = false }
+    })
+
+    const parsePageList = (input, count) => {
+      if (!(input instanceof HTMLInputElement)) return null
+      const pages = parseRange(input.value)
+      return pages && pages.every((page) => page < count) ? pages : null
+    }
+
+    root.querySelector('[data-manage-save]')?.addEventListener('click', async (event) => {
+      const button = event.currentTarget, file = manageInput instanceof HTMLInputElement ? manageInput.files?.[0] : null
+      if (!(button instanceof HTMLButtonElement) || !file || !(manageOrder instanceof HTMLInputElement) || !status) { if (status) status.textContent = text.errorFiles; return }
+      button.disabled = true
+      try {
+        const { PDFDocument } = await loadPdfLib(), input = await PDFDocument.load(await file.arrayBuffer()), indices = parsePageList(manageOrder, input.getPageCount())
+        if (!indices) { status.textContent = text.errorRange; return }
+        const output = await PDFDocument.create(), copied = await output.copyPages(input, indices)
+        copied.forEach((page) => output.addPage(page))
+        download(await output.save(), safeName(file.name) + '-pages-edited.pdf'); status.textContent = text.ready
+      } catch { status.textContent = text.errorProcess } finally { button.disabled = false }
+    })
+
+    root.querySelector('[data-rotate]')?.addEventListener('click', async (event) => {
+      const button = event.currentTarget, file = manageInput instanceof HTMLInputElement ? manageInput.files?.[0] : null
+      if (!(button instanceof HTMLButtonElement) || !file || !status) { if (status) status.textContent = text.errorFiles; return }
+      button.disabled = true
+      try {
+        const { PDFDocument, degrees } = await loadPdfLib(), input = await PDFDocument.load(await file.arrayBuffer()), indices = parsePageList(rotateRange, input.getPageCount())
+        if (!indices) { status.textContent = text.errorRange; return }
+        for (const index of indices) { const page = input.getPage(index); page.setRotation(degrees((page.getRotation().angle + 90) % 360)) }
+        download(await input.save(), safeName(file.name) + '-rotated.pdf'); status.textContent = text.ready
+      } catch { status.textContent = text.errorProcess } finally { button.disabled = false }
+    })
 
     mergeInput?.addEventListener('change', () => {
       const files = [...(mergeInput.files ?? [])]
