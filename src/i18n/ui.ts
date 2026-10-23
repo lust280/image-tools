@@ -71,6 +71,8 @@ type ToolCopy = {
   handleSw: string
   handleSe: string
   wrongType: string
+  tryInstead: string
+  or: string
   tooMany: string
   decode: string
   heicFail: string
@@ -143,6 +145,8 @@ export const toolText: Record<Locale, ToolCopy> = {
     handleSw: 'Resize from the bottom left',
     handleSe: 'Resize from the bottom right',
     wrongType: 'This tool accepts {label} files.',
+    tryInstead: 'Try {list} instead.',
+    or: 'or',
     tooMany: 'Only the first {max} files were added.',
     decode: 'Could not read this image.',
     heicFail: 'This browser could not decode that HEIC file. Try Safari, or export a JPG from Photos. The original stays on your device.',
@@ -213,6 +217,8 @@ export const toolText: Record<Locale, ToolCopy> = {
     handleSw: 'Изменить размер с нижнего левого угла',
     handleSe: 'Изменить размер с нижнего правого угла',
     wrongType: 'Этот инструмент принимает только файлы {label}.',
+    tryInstead: 'Попробуйте {list}.',
+    or: 'или',
     tooMany: 'Добавлены только первые {max} файлов.',
     decode: 'Не удалось прочитать это изображение.',
     heicFail: 'Браузер не смог открыть этот HEIC. Попробуйте Safari или сохраните JPG из приложения «Фото». Оригинал остаётся на устройстве.',

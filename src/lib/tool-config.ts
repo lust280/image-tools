@@ -2,6 +2,13 @@ export type OutputId = 'jpg' | 'png' | 'webp' | 'original'
 export type ToolKind = 'convert' | 'compress' | 'resize' | 'crop'
 export type DecodeMode = 'heic' | 'bitmap'
 
+export type ToolSuggestion = {
+  /** Normalized extension this other tool accepts: .jpg, .png, .webp, or .heic. */
+  ext: string
+  href: string
+  title: string
+}
+
 export type ToolClientConfig = {
   slug: string
   kind: ToolKind
@@ -11,6 +18,8 @@ export type ToolClientConfig = {
   defaultOutput: OutputId
   defaultQuality: number
   decode: DecodeMode
+  /** Other tools to offer when a file’s type is rejected. */
+  suggest: ToolSuggestion[]
 }
 
 export const OUTPUTS: Record<Exclude<OutputId, 'original'>, { mime: string; ext: string; quality: boolean }> = {

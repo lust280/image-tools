@@ -204,6 +204,7 @@ select {
 }
 
 .btn {
+  appearance: none;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -213,7 +214,8 @@ select {
   border-radius: 999px;
   border: 1px solid transparent;
   background: var(--color-accent);
-  color: white;
+  color: #fff;
+  -webkit-text-fill-color: #fff;
   font-weight: 700;
   text-decoration: none;
   cursor: pointer;
@@ -227,6 +229,7 @@ select {
 .text-btn {
   background: transparent;
   color: var(--color-ink);
+  -webkit-text-fill-color: var(--color-ink);
   border-color: var(--color-line);
 }
 
@@ -534,6 +537,13 @@ legend {
   border-radius: 12px;
   padding: 10px 12px;
   margin: 0;
+}
+
+.alert a {
+  color: var(--color-ink);
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 2px;
 }
 
 .alert:empty,
