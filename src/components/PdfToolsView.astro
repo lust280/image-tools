@@ -73,6 +73,7 @@ const copy = locale === 'ru'
       pages: 'Страницы PDF', pagesHelp: 'Введите страницы в нужном порядке. Пропущенные номера будут удалены. Чтобы повернуть страницы, выберите номера ниже.', rotatePages: 'Страницы для поворота', pagesButton: 'Сохранить страницы', rotateButton: 'Повернуть на 90°',
       imagesPdf: 'JPG в PDF', imagesPdfHelp: 'Выберите один или несколько JPG. Каждое фото станет отдельной страницей.', imagesPdfButton: 'Создать PDF',
       sign: 'Подписать PDF', signHelp: 'Добавьте нарисованную подпись на страницу в редакторе.', signMode: 'Нарисовать подпись',
+      downloadResult: 'Скачать готовый PDF',
     }
   : {
       path: '/pdf-tools/',
@@ -137,6 +138,7 @@ const copy = locale === 'ru'
       pages: 'PDF pages', pagesHelp: 'Enter page numbers in the order you want. Omitted pages will be removed. Choose pages below to rotate them.', rotatePages: 'Pages to rotate', pagesButton: 'Save pages', rotateButton: 'Rotate 90°',
       imagesPdf: 'JPG to PDF', imagesPdfHelp: 'Choose one or more JPG images. Each photo becomes a separate page.', imagesPdfButton: 'Create PDF',
       sign: 'Sign a PDF', signHelp: 'Add a drawn signature to a page in the editor.', signMode: 'Draw signature',
+      downloadResult: 'Download your PDF',
     }
 const homeUrl = canonical(homePath(locale))
 const jsonLd = {
@@ -280,6 +282,7 @@ const jsonLd = {
 
     <p class="local-note">{copy.localNote}</p>
     <p class="pdf-status" role="status" aria-live="polite" data-status></p>
+    <p><a data-download-result hidden target="_blank" rel="noopener">{copy.downloadResult}</a></p>
     <section class="pdf-faq" aria-labelledby="pdf-faq-title">
       <h2 id="pdf-faq-title">{copy.faqTitle}</h2>
       <h3>{copy.faqEditQ}</h3>
@@ -395,6 +398,8 @@ const jsonLd = {
       errorProcess: ru ? 'Не удалось обработать PDF. Убедитесь, что файл не повреждён и не защищён паролем.' : 'Could not process the PDF. Check that it is valid and not password protected.',
     }
     const status = root.querySelector('[data-status]')
+    const downloadResult = root.querySelector('[data-download-result]')
+    let previousDownloadUrl = null
     const mergeInput = root.querySelector('[data-merge-files]')
     const extractInput = root.querySelector('[data-extract-file]')
     const summary = root.querySelector('[data-merge-summary]')
@@ -692,11 +697,23 @@ const jsonLd = {
     const download = (bytes, filename) => {
       const blob = new Blob([bytes], { type: 'application/pdf' })
       const url = URL.createObjectURL(blob)
+      if (previousDownloadUrl) URL.revokeObjectURL(previousDownloadUrl)
+      previousDownloadUrl = url
+      if (downloadResult instanceof HTMLAnchorElement) {
+        downloadResult.href = url
+        downloadResult.download = filename
+        downloadResult.hidden = false
+      }
       const link = document.createElement('a')
       link.href = url
       link.download = filename
+      link.target = '_blank'
+      link.rel = 'noopener'
+      link.style.position = 'fixed'
+      link.style.left = '-10000px'
+      document.body.append(link)
       link.click()
-      setTimeout(() => URL.revokeObjectURL(url), 30000)
+      link.remove()
     }
     const safeName = (name) => name.replace(/\.pdf$/i, '').replace(/[^\p{L}\p{N}._-]+/gu, '-') || 'document'
     const outputName = (names, suffix) => names.slice(0, 2).map(safeName).join('-') + (names.length > 2 ? '-and-more' : '') + suffix + '.pdf'
